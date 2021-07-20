@@ -4,24 +4,25 @@ from collections import namedtuple
 
 class csv_reader:
     def __init__(self, name: str) -> None:
-        self.file = open(name, "r")
+        self.file = open(name, "r", encoding="utf-8-sig")
         self.reader = csv.reader(self.file)
         self.name = name
 
     def __enter__(self):
         return self
 
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_value, tb):
         return self.file.close()
 
     @staticmethod
-    def read_columns(reader):
+    def _read_columns(reader):
         return namedtuple("data", next(reader))
 
     def read_data(self):
-        data = self.read_columns(self.reader)
+        data = self._read_columns(self.reader)
         return [data(*row) for row in self.reader]
 
     @property
     def get_name(self):
-        return self.name.replace('.csv', '')
+        _name = self.name.split("/")[-1]
+        return _name.replace(".csv", "")
