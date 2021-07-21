@@ -1,4 +1,5 @@
-from ..app.app import db
+import os
+from app.app import db
 
 
 class Cities(db.Model):
@@ -11,7 +12,7 @@ class Cities(db.Model):
         self.name = name
 
     def __repr__(self):
-        return self.name
+        return f"City: {self.name}"
 
 
 def create_routes_tables(tablename: str):
@@ -27,10 +28,6 @@ def create_routes_tables(tablename: str):
             self.desc = desc
 
         def __repr__(self):
-            return self.name
+            return f"Route: {self.name}"
 
     return Routes
-
-
-def to_json():
-    pass

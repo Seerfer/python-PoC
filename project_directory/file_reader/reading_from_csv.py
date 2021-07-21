@@ -4,14 +4,17 @@ from typing import NamedTuple
 from .csvreader import csv_reader
 
 
-def get_files(dir: str = "data") -> list:
-    data_dir = os.path.join(os.getcwd(), dir)
+def get_files(
+    dir_path: str = os.path.abspath(os.path.join(os.getcwd(), os.pardir)),
+    dir_name: str = "data",
+) -> list:
+    full_path = dir_path + "/" + dir_name
     files = [
         file
-        for file in os.listdir(data_dir)
-        if os.path.isfile(os.path.join(data_dir, file))
+        for file in os.listdir(full_path)
+        if os.path.isfile(os.path.join(full_path, file))
     ]
-    return [os.path.join(data_dir, file) for file in files]
+    return [os.path.join(full_path, file) for file in files]
 
 
 def read_files(files: list) -> (NamedTuple, NamedTuple):

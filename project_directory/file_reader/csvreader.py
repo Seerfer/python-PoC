@@ -24,5 +24,6 @@ class csv_reader:
 
     @property
     def get_name(self):
-        _name = self.name.split("/")[-1]
-        return _name.replace(".csv", "")
+        _name = self.name.replace("routes-", "")
+        _name = _name.replace(".csv", "")
+        return _name.split("/")[-1]
