@@ -1,9 +1,11 @@
 import os
+from typing import NamedTuple
 
 from csvreader import csv_reader
+from models import create_routes_tables, Cities
 
 
-def get_files(dir: str = "data"):
+def get_files(dir: str = "data") -> list:
     data_dir = os.path.join(os.getcwd(), dir)
     files = [
         file
@@ -13,7 +15,7 @@ def get_files(dir: str = "data"):
     return [os.path.join(data_dir, file) for file in files]
 
 
-def read_files(files):
+def read_files(files: list) -> (NamedTuple, NamedTuple):
     data = {}
     cities = None
     for f in files:
@@ -25,8 +27,6 @@ def read_files(files):
 
     return cities, data
 
-def start_app():
-    pass
 
 if __name__ == "__main__":
     cities, data = read_files(get_files())
