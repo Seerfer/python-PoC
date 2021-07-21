@@ -1,4 +1,4 @@
-from app.app import db
+from ..app.app import db
 
 
 class Cities(db.Model):
