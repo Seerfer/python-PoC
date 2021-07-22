@@ -31,3 +31,9 @@ def create_routes_tables(tablename: str):
             return f"Route: {self.name}"
 
     return Routes
+
+
+def get_class_by_tablename(tablename):
+    for c in db.Model._decl_class_registry.values():
+        if hasattr(c, "__tablename__") and c.__tablename__ == tablename:
+            return c
