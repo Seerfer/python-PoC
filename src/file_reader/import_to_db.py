@@ -28,14 +28,14 @@ def _import_routes(cities, routes):
     return records
 
 
-def _import(dba, records):
-    dba.session.add_all(records)
-    dba.session.commit()
+def _import(db, records):
+    db.session.add_all(records)
+    db.session.commit()
 
 
-def db_import(dba, data=default_reader()):
+def db_import(db, data=default_reader()):
     cities, routes = data
     records_to_import = _import_cities(cities)
     route_tables = _create_tables(list(routes.keys()))
     records_to_import.extend(_import_routes(routes, route_tables))
-    _import(dba, records_to_import)
+    _import(db, records_to_import)
