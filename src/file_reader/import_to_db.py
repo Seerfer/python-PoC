@@ -1,5 +1,5 @@
 from file_reader.reading_from_csv import default_reader
-from file_reader.models import db, Cities, create_routes_tables
+from file_reader.models import Cities, create_routes_tables
 
 
 def _import_cities(records: list) -> list:
@@ -28,14 +28,14 @@ def _import_routes(cities, routes):
     return records
 
 
-def _import(records):
-    db.session.add_all(records)
-    db.session.commit()
+def _import(dba, records):
+    dba.session.add_all(records)
+    dba.session.commit()
 
 
-def db_import(data=default_reader()):
+def db_import(dba, data=default_reader()):
     cities, routes = data
     records_to_import = _import_cities(cities)
     route_tables = _create_tables(list(routes.keys()))
     records_to_import.extend(_import_routes(routes, route_tables))
-    _import(records_to_import)
+    _import(dba, records_to_import)
