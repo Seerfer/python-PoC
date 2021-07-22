@@ -22,12 +22,16 @@ def _import_routes(cities, routes):
     for city in cities:
         table = routes[city]
         for record in cities[city]:
-            records.append(table(record.route_id, record.route_short_name, record.route_desc))
+            records.append(
+                table(record.route_id, record.route_short_name, record.route_desc)
+            )
     return records
+
 
 def _import(records):
     db.session.add_all(records)
     db.session.commit()
+
 
 def db_import(data=default_reader()):
     cities = data[0]

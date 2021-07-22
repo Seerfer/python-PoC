@@ -1,6 +1,8 @@
-import os
-from app.app import db
+from flask_sqlalchemy import SQLAlchemy
+from ..app.app import app
 
+db = SQLAlchemy(app)
+db.create_all()
 
 class Cities(db.Model):
     __tablename__ = "cities"
@@ -33,7 +35,7 @@ def create_routes_tables(tablename: str):
     return Routes
 
 
-def get_class_by_tablename(tablename):
+def get_class_by_tablename(tablename: str):
     for c in db.Model._decl_class_registry.values():
         if hasattr(c, "__tablename__") and c.__tablename__ == tablename:
             return c
