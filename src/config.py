@@ -1,4 +1,4 @@
-class Config(object):
+class Config:
     DEBUG = False
     DEVELOPMENT = True
     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:pass@localhost:5432/baza"

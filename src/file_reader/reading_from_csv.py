@@ -1,7 +1,7 @@
 import os
-from typing import NamedTuple
+from typing import Tuple
 
-from .csvreader import csv_reader
+from file_reader.csvreader import csv_reader
 
 
 def get_files(
@@ -17,7 +17,7 @@ def get_files(
     return [os.path.join(full_path, file) for file in files]
 
 
-def read_files(files: list) -> (NamedTuple, NamedTuple):
+def read_files(files: list) -> Tuple: 
     data = {}
     cities = None
     for f in files:

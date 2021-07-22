@@ -1,8 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from ..app.app import app
 
-db = SQLAlchemy(app)
-db.create_all()
+db = SQLAlchemy()
+
 
 class Cities(db.Model):
     __tablename__ = "cities"
@@ -31,7 +30,6 @@ def create_routes_tables(tablename: str):
 
         def __repr__(self):
             return f"Route: {self.name}"
-
     return Routes
 
 
