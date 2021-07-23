@@ -1,8 +1,8 @@
 from flask import Flask
 
 import config
-from file_reader.import_to_db import db_import
 from file_reader.models import Cities, get_class_by_tablename, db
+from file_reader.import_to_db import db_import
 
 # Init
 app = Flask(__name__)
@@ -24,7 +24,5 @@ def get_cities():
 
 
 if __name__ == "__main__":
-    db.create_all()
     db_import(db)
-
     app.run(port=2137)

@@ -19,11 +19,11 @@ class Cities(db.Model):
 def create_routes_tables(tablename: str):
     class Routes(db.Model):
         __tablename__ = tablename
-        id = db.Column(db.Integer, primary_key=True)
+        id = db.Column(db.String(3), primary_key=True)
         name = db.Column(db.String(15), unique=True)
-        desc = db.Column(db.String(150))
+        desc = db.Column(db.Text)
 
-        def __init__(self, id: int, name: str, desc: str):
+        def __init__(self, id: str, name: str, desc: str):
             self.id = id
             self.name = name
             self.desc = desc
