@@ -36,12 +36,12 @@ def create_routes_tables(tablename: str):
             return f"Route: {self.id}"
 
         def serialize(self):
-            return {"id": self.id, "name": self.name, "desc": self.desc}
+            return {"id": self.id,  "name": self.name, "desc": self.desc}
 
     return Routes
 
 
 def get_class_by_tablename(tablename: str):
-    for c in db.Model._decl_class_registry.values():
+    for c in db.Model.registry._class_registry.values():
         if hasattr(c, "__tablename__") and c.__tablename__ == tablename:
             return c
