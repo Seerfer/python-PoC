@@ -17,7 +17,7 @@ def get_files(
     return [os.path.join(full_path, file) for file in files]
 
 
-def read_files(files: list) -> Tuple: 
+def read_files(files: list) -> Tuple:
     data = {}
     cities = None
     for f in files:

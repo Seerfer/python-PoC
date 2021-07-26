@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 
@@ -13,7 +14,10 @@ class Cities(db.Model):
         self.name = name
 
     def __repr__(self):
-        return f"City: {self.name}"
+        return f"City: {self.id}"
+
+    def serialize(self):
+        return {"id": self.id, "name": self.name}
 
 
 def create_routes_tables(tablename: str):
@@ -29,7 +33,11 @@ def create_routes_tables(tablename: str):
             self.desc = desc
 
         def __repr__(self):
-            return f"Route: {self.name}"
+            return f"Route: {self.id}"
+
+        def serialize(self):
+            return {"id": self.id, "name": self.name, "desc": self.desc}
+
     return Routes
 
 
