@@ -29,7 +29,9 @@ def _import_routes(cities, routes):
 
 
 def _import(db, records):
+    db.drop_all()
     db.create_all()
+    db.session.add_all(records)
     db.session.commit()
 
 

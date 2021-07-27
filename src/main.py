@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, jsonify
 
 import config
@@ -28,4 +26,4 @@ def get_cities():
 
 if __name__ == "__main__":
     db_import(db)
-    app.run(port=2137)
+    app.run()

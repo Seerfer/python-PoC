@@ -1,3 +1,4 @@
+import os
 import csv
 from collections import namedtuple
 
@@ -27,3 +28,16 @@ class csv_reader:
         _name = self.name.replace("routes-", "")
         _name = _name.replace(".csv", "")
         return _name.split("/")[-1]
+
+    @staticmethod
+    def get_files(
+        dir_path: str = os.path.abspath(os.path.join(os.getcwd(), os.pardir)),
+        dir_name: str = "data",
+    ) -> list:
+        full_path = dir_path + "/" + dir_name
+        files = [
+            file
+            for file in os.listdir(full_path)
+            if os.path.isfile(os.path.join(full_path, file))
+        ]
+        return [os.path.join(full_path, file) for file in files]

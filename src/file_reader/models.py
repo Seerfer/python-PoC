@@ -36,7 +36,7 @@ def create_routes_tables(tablename: str):
             return f"Route: {self.id}"
 
         def serialize(self):
-            return {"id": self.id,  "name": self.name, "desc": self.desc}
+            return {"id": self.id, "name": self.name, "desc": self.desc}
 
     return Routes
 
