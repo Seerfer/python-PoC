@@ -4,10 +4,12 @@ from collections import namedtuple
 
 
 class csv_reader:
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, headers_to_read: list) -> None:
         self.file = open(name, "r", encoding="utf-8-sig")
         self.reader = csv.reader(self.file)
         self.name = name
+        self.headers = headers_to_read
+        self.all_headers = next(self.reader)
 
     def __enter__(self):
         return self
@@ -15,29 +17,23 @@ class csv_reader:
     def __exit__(self, exc_type, exc_value, tb):
         return self.file.close()
 
-    @staticmethod
-    def _read_columns(reader):
-        return namedtuple("data", next(reader))
-
     def read_data(self):
-        data = self._read_columns(self.reader)
-        return [data(*row) for row in self.reader]
+        data = namedtuple("data", self.headers)
+        return [data(*row) for row in self._list_of_specific_rows()]
+
+    def _list_of_specific_rows(self):
+        for row in self.reader:
+            yield self.read_specific_elements_of_list(row, self.get_indexes_to_read(self.all_headers, self.headers))
+
+    @staticmethod
+    def get_indexes_to_read(mainlist, sublist):
+        return [mainlist.index(el) for el in sublist]
+
+    @staticmethod
+    def read_specific_elements_of_list(mainlist, indexes):
+        return [mainlist[i] for i in indexes]
 
     @property
     def get_name(self):
-        _name = self.name.replace("routes-", "")
-        _name = _name.replace(".csv", "")
+        _name = self.name.replace(".csv", "")
         return _name.split("/")[-1]
-
-    @staticmethod
-    def get_files(
-        dir_path: str = os.path.abspath(os.path.join(os.getcwd(), os.pardir)),
-        dir_name: str = "data",
-    ) -> list:
-        full_path = dir_path + "/" + dir_name
-        files = [
-            file
-            for file in os.listdir(full_path)
-            if os.path.isfile(os.path.join(full_path, file))
-        ]
-        return [os.path.join(full_path, file) for file in files]
