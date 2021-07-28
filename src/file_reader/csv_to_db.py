@@ -31,10 +31,11 @@ def import_to_db(data, name, db=db):
     if get_class_by_tablename(name) == None:
         model = create_routes_tables(name)
     model = get_class_by_tablename(name)
-    db.create_all()
-    records = [model(*record) for record in data]
-    db.session.add_all(records)
-    db.session.commit()
+    with app.app_context():
+        db.create_all()
+        records = [model(*record) for record in data]
+        db.session.add_all(records)
+        db.session.commit()
 
 
 def read_file(f):
@@ -42,7 +43,6 @@ def read_file(f):
     with csv_reader(f, headers) as file:
         name = file.get_name
         data = file.read_data()
-        print(data)
         import_to_db(data, name)
 
 
@@ -56,6 +56,9 @@ def read_files(files: list):
     for t in threads:
         t.join()
 
-def default_reader():
+
+def default_reader(app_parameter):
+    global app
+    app = app_parameter
     db.reflect()
     return read_files(get_files())
