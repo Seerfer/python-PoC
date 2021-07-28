@@ -1,5 +1,6 @@
 import os
 import re
+import threading
 
 from file_reader.models import Cities, create_routes_tables, get_class_by_tablename, db
 from file_reader.csvreader import csv_reader
@@ -36,15 +37,24 @@ def import_to_db(data, name, db=db):
     db.session.commit()
 
 
-def read_files(files: list):
-    for f in files:
-        headers = _define_headers_to_read(f)
-        with csv_reader(f, headers) as file:
-            name = file.get_name
-            data = file.read_data()
-            print(data)
-            import_to_db(data, name)
+def read_file(f):
+    headers = _define_headers_to_read(f)
+    with csv_reader(f, headers) as file:
+        name = file.get_name
+        data = file.read_data()
+        print(data)
+        import_to_db(data, name)
 
+
+def read_files(files: list):
+    threads = []
+    for f in files:
+        t = threading.Thread(target=read_file, args=(f,))
+        t.start()
+        threads.append(t)
+
+    for t in threads:
+        t.join()
 
 def default_reader():
     db.reflect()
