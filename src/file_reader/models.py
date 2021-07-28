@@ -23,7 +23,6 @@ class Cities(db.Model):
 def create_routes_tables(tablename: str):
     class Routes(db.Model):
         __tablename__ = tablename
-        extend_existing = True
         id = db.Column(db.String(3), primary_key=True)
         name = db.Column(db.String(15), unique=True)
         desc = db.Column(db.Text)
