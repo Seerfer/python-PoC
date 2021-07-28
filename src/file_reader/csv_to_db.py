@@ -31,9 +31,9 @@ def import_to_db(data, name, db=db):
     if get_class_by_tablename(name) == None:
         model = create_routes_tables(name)
     model = get_class_by_tablename(name)
+    records = [model(*record) for record in data]
     with app.app_context():
-        db.create_all()
-        records = [model(*record) for record in data]
+        model.__table__.create(db.engine)
         db.session.add_all(records)
         db.session.commit()
 
