@@ -23,7 +23,9 @@ class csv_reader:
 
     def _list_of_specific_rows(self):
         for row in self.reader:
-            yield self.read_specific_elements_of_list(row, self.get_indexes_to_read(self.all_headers, self.headers))
+            yield self.read_specific_elements_of_list(
+                row, self.get_indexes_to_read(self.all_headers, self.headers)
+            )
 
     @staticmethod
     def get_indexes_to_read(mainlist, sublist):
