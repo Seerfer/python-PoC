@@ -41,6 +41,19 @@ def create_routes_tables(tablename: str):
     return Routes
 
 
+# TODO
+def create_stop_times_tables(tablename: str):
+    pass
+
+
+def create_stops_tables(tablename: str):
+    pass
+
+
+def create_trips_tables(tablename: str):
+    pass
+
+
 def get_class_by_tablename(tablename: str):
     for c in db.Model.registry._class_registry.values():
         if hasattr(c, "__tablename__") and c.__tablename__ == tablename:

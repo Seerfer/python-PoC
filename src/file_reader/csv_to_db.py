@@ -25,6 +25,13 @@ def _define_headers_to_read(file):
         return ["route_id", "route_short_name", "route_desc"]
     elif re.match("^cities", filename):
         return ["city_id", "city_name"]
+    # TODO
+    elif re.match("^stop_times", filename):
+        pass
+    elif re.match("^stops", filename):
+        pass
+    elif re.match("^trips", filename):
+        pass
 
 
 def import_to_db(data, name, db=db):
@@ -60,5 +67,4 @@ def read_files(files: list):
 def default_reader(app_parameter):
     global app
     app = app_parameter
-    db.reflect()
     return read_files(get_files())
